@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FinalResult extends Model
+class Meeting extends Model
 {
     use HasFactory;
 
@@ -14,5 +14,15 @@ class FinalResult extends Model
     public function patient()
     {
         return $this->belongsTo(Patient::class);
+    }
+
+    public function specialist()
+    {
+        return $this->belongsTo(Specialist::class);
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(MeetingAttached::class);
     }
 }

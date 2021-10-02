@@ -9,6 +9,8 @@ class Patient extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
     public function specialist()
     {
         return $this->belongsTo(Specialist::class);
@@ -27,6 +29,11 @@ class Patient extends Model
     public function schedules() // the Patient has many schedule
     {
         return $this->hasMany(Schedule::class);
+    }
+
+    public function meetings()
+    {
+        return $this->hasMany(Meeting::class);
     }
 
     public function results()

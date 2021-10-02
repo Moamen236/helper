@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuesCategoriesTable extends Migration
+class CreateMeetingAttachedsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateQuesCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('ques_categories', function (Blueprint $table) {
+        Schema::create('meeting_attacheds', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
-            $table->foreignId('ques_type_id')->constrained();
+            $table->string('attached');
+            $table->foreignId('meeting_id')->constrained();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateQuesCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ques_categories');
+        Schema::dropIfExists('meeting_attacheds');
     }
 }

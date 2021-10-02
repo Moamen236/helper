@@ -9,6 +9,8 @@ class Specialist extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id', 'created_at', 'updated_at'];
+
     public function user() // the specialist belong to user as he one user
     {
         return $this->belongsTo(User::class);
@@ -32,5 +34,10 @@ class Specialist extends Model
     public function schedules() // the specialist has many schedule
     {
         return $this->hasMany(Schedule::class);
+    }
+
+    public function meetings()
+    {
+        return $this->hasMany(Meeting::class);
     }
 }
