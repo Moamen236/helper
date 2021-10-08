@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class QuesCategory extends Model
 {
@@ -19,5 +20,13 @@ class QuesCategory extends Model
     public function type()
     {
         return $this->belongsTo(QuesType::class);
+    }
+
+    //Lang
+    public function name($lang = null)
+    {
+        $lang = $lang ?? App::getLocale();
+
+        return json_decode($this->name)->$lang;
     }
 }

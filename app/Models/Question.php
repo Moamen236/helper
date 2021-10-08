@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class Question extends Model
 {
@@ -24,5 +25,12 @@ class Question extends Model
     public function results()
     {
         return $this->hasMany(QuesResult::class);
+    }
+
+    public function question($lang = null)
+    {
+        $lang = $lang ?? App::getLocale();
+
+        return json_decode($this->question)->$lang;
     }
 }

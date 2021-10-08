@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Language\LangController;
+use App\Http\Controllers\web\specialist\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Home page
 Route::get('/', function () {
-    return view('welcome');
+    return view('home.index');
 });
+
+// Specialist
+Route::get('/specialist-home', [HomeController::class, 'index']);
+
+
+
+// Language
+Route::get('lang/set/{lang}', [LangController::class, 'set']);

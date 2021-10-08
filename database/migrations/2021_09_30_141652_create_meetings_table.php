@@ -15,9 +15,9 @@ class CreateMeetingsTable extends Migration
     {
         Schema::create('meetings', function (Blueprint $table) {
             $table->id();
-            $table->text('activities');
-            $table->dateTime('duration');
+            // $table->text('activities');
             $table->text('diagnosis');
+            $table->tinyInteger('duration');
             $table->foreignId('specialist_id')->constrained();
             $table->foreignId('patient_id')->constrained();
             $table->timestamps();

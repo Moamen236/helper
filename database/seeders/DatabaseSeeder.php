@@ -22,6 +22,13 @@ class DatabaseSeeder extends Seeder
             QuesTypeSeeder::class,
             QuesCatSeeder::class,
             QuesSeeder::class,
+            PlanTypeSeeder::class,
+            PlanSeeder::class,
+            ScheduleSeeder::class,
+            ToDoSeeder::class,
+            ToDoAttachSeeder::class,
+            MeetingSeeder::class,
+            MeetingAttachSeeder::class
         ]);
     }
 }

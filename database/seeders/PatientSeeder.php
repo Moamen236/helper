@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Patient;
+use App\Models\Plan;
 use Illuminate\Database\Seeder;
 
 class PatientSeeder extends Seeder
@@ -14,9 +15,7 @@ class PatientSeeder extends Seeder
      */
     public function run()
     {
-        Patient::create([
-            'name' => 'Ahmed',
-            'cg_name' => 'caregiver',
+        Patient::factory()->count(20)->create([
             'caregiver_id' => 1,
             'specialist_id' => 1
         ]);
