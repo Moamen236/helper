@@ -3,6 +3,8 @@
 use App\Http\Controllers\Language\LangController;
 use App\Http\Controllers\web\PatientContoller;
 use App\Http\Controllers\web\DiagnosisController;
+use App\Http\Controllers\web\login\LoginController;
+use App\Http\Controllers\web\login\RegisterController;
 use App\Http\Controllers\web\PlanController;
 use App\Http\Controllers\web\ScheduleController;
 use App\Http\Controllers\web\specialist\HomeController;
@@ -35,7 +37,5 @@ Route::middleware('lang')->group(function () {
     Route::get('/specialist/patient/{id}/plan', [PlanController::class, 'index']); // got to Plan
 });
 
-
-
 // Language
-Route::get('lang/set/{lang}', [LangController::class, 'set']);
+Route::get('/lang/set/{lang}', [LangController::class, 'set']);
