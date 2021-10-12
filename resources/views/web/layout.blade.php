@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{ asset('web/css/fontawesome.all.css') }}">
         <!-- Theme style -->
         <link rel="stylesheet" href="{{ asset('web/css/adminlte.css') }}">
+        <link rel="stylesheet" href="{{ asset('web/css/style.css') }}">
         <!-- Google Font: Source Sans Pro -->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
         @yield('css')
@@ -28,7 +29,63 @@
                   <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
               </ul>
-              
+              <ul class="navbar-nav ml-auto">
+                <!-- language Dropdown Menu -->
+                <li class="nav-item dropdown">
+                  <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                    @if(App::getLocale() == 'ar')
+                      <b> Ar </b>
+                    @else
+                      <b> En </b> 
+                    @endif
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right p-0" style="left: inherit; right: 0px;">
+                    <a href="{{ url("lang/set/en") }}"
+                    @if(App::getLocale() == 'en')
+                      class="dropdown-item active" 
+                    @else
+                      class="dropdown-item" 
+                    @endif>
+                      English
+                    </a>
+                    <a href="{{ url("lang/set/ar") }}" 
+                    @if(App::getLocale() == 'ar')
+                      class="dropdown-item active" 
+                    @else
+                      class="dropdown-item" 
+                    @endif>
+                      Arabic
+                    </a>
+                  </div>
+                </li>
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                  <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="far fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">15</span>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+                    <span class="dropdown-item dropdown-header">15 Notifications</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                      <i class="fas fa-envelope mr-2"></i> 4 new messages
+                      <span class="float-right text-muted text-sm">3 mins</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                      <i class="fas fa-users mr-2"></i> 8 friend requests
+                      <span class="float-right text-muted text-sm">12 hours</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                      <i class="fas fa-file mr-2"></i> 3 new reports
+                      <span class="float-right text-muted text-sm">2 days</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                  </div>
+                </li>
+              </ul>
             </nav>
             <!-- /.navbar -->
           
@@ -36,9 +93,9 @@
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
               <!-- Brand Logo -->
               <a href="#" class="brand-link">
-                <img src="{{ asset('web/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                <img src="{{ asset('web/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image"
                      style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
+                <span class="brand-text font-weight-light">Autism Helper</span>
               </a>
           
               <!-- Sidebar -->
@@ -49,7 +106,7 @@
                     <img src="{{ asset('web/img/user-profile.jpg') }}" class="img-circle elevation-2" alt="User Image">
                   </div>
                   <div class="info">
-                    <a href="#" class="d-block">Admin user</a>
+                    <a href="#" class="d-block">username</a>
                   </div>
                 </div>
           
@@ -58,34 +115,43 @@
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
-                    <li class="nav-item has-treeview menu-open">
-                      <a href="#" class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <li class="nav-item">
+                      <a href="{{ url('specialist/home') }}" class="nav-link">
+                        <i class="fas fa-home"></i>
                         <p>
-                          Sample Pages
-                          <i class="right fas fa-angle-left"></i>
+                          {{ __('web.home') }}
                         </p>
                       </a>
-                      <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                          <a href="#" class="nav-link active">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Page one</p>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a href="#" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Page two</p>
-                          </a>
-                        </li>
-                      </ul>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{ url('specialist/patients') }}" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <p>
+                          {{ __('web.patients') }}
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{ url('specialist/schedule') }}" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <p>
+                          {{ __('web.schedule') }}
+                        </p>
+                      </a>
                     </li>
                     <li class="nav-item">
                       <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="fas fa-newspaper"></i>
                         <p>
-                          Page three
+                          {{ __('web.articles') }}
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="fas fa-sitemap"></i>
+                        <p>
+                          {{ __('web.organizations') }}
                         </p>
                       </a>
                     </li>
@@ -107,22 +173,13 @@
                 </div>
             </aside>
             <!-- /.control-sidebar -->
-            
-            <!-- Main Footer -->
-            <footer class="main-footer">
-                <!-- To the right -->
-                <div class="float-right d-none d-sm-inline">
-                Anything you want
-                </div>
-                <!-- Default to the left -->
-                <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-            </footer>
         </div>
 
         <!-- jQuery -->
         <script src="{{ asset('web/js/jquery.js') }}"></script>
         <!-- Bootstrap 4 -->
-        <script src="{{ asset('web/js/bootstrap.bundle.js') }}"></script>
+        {{-- <script src="{{ asset('web/js/bootstrap.bundle.js') }}"></script> --}}
+        <script src="{{ asset('web/js/bootstrap.min.js') }}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('web/js/adminlte.js') }}"></script>
         @yield('js')

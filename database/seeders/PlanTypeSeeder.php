@@ -16,10 +16,10 @@ class PlanTypeSeeder extends Seeder
     public function run()
     {
         $types = [
-            json_encode(['en' => 'Strength Points', 'ar' => 'نقاط القوة']),
-            json_encode(['en' => 'Weakness Points', 'ar' => 'نقاط الضعف']),
+            json_encode(['en' => 'strength points', 'ar' => 'نقاط القوة']),
+            json_encode(['en' => 'weakness points', 'ar' => 'نقاط الضعف']),
             json_encode(['en' => 'long term goals', 'ar' => 'أهداف بعيدة المدى']),
-            json_encode(['en' => 'Short Term goals', 'ar' => 'أهداف قصيرة المدى'])
+            json_encode(['en' => 'short term goals', 'ar' => 'أهداف قصيرة المدى'])
         ];
 
         foreach ($types as $type) {

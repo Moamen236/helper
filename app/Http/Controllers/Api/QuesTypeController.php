@@ -15,8 +15,9 @@ class QuesTypeController extends Controller
         return QuesTypeResource::collection($quesTypes);
     }
 
-    public function show(QuesType $quesType)
+    public function show($id)
     {
+        $quesType = QuesType::with('categories')->findOrFail($id);
         return new QuesTypeResource($quesType);
     }
 }

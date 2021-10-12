@@ -17,7 +17,7 @@ class QuesTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->type,
-            'cats' => QuesCatResource::collection($this->categories)
+            'cats' => QuesCatResource::collection($this->whenLoaded('categories'))
         ];
     }
 }

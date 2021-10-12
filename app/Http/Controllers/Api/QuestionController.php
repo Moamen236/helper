@@ -14,9 +14,4 @@ class QuestionController extends Controller
         $questions = Question::get();
         return QuestionResource::collection($questions);
     }
-
-    public function show(Question $question)
-    {
-        return new QuestionResource($question);
-    }
 }

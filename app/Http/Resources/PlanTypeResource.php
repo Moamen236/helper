@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class QuesCatResource extends JsonResource
+class PlanTypeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,7 +18,8 @@ class QuesCatResource extends JsonResource
             'id' => $this->id,
             'name_en' => $this->name('en'),
             'name_ar' => $this->name('ar'),
-            'questions' => QuestionResource::collection($this->questions)
+            'descriptions' => PlanResource::collection($this->plans)
         ];
+        // return parent::toArray($request);
     }
 }

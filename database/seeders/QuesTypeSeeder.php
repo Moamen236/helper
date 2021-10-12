@@ -14,7 +14,7 @@ class QuesTypeSeeder extends Seeder
      */
     public function run()
     {
-        $types = ['notic', 'adir', 'attched reports', 'evaluation history', 'dsm5', 'scale', 'lovaas'];
+        $types = ['notic', 'adir', 'attached reports', 'evaluation history', 'dsm5', 'scale', 'lovaas'];
 
         foreach ($types as $type) {
             QuesType::create([
