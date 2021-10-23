@@ -85,6 +85,12 @@
                     <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                   </div>
                 </li>
+                <li class="nav-item">
+                  <form action="{{ url('logout') }}" method="post" id="logout-form">@csrf</form>
+                  <a class="nav-link" href="#" aria-expanded="false" id="logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                  </a>
+                </li>
               </ul>
             </nav>
             <!-- /.navbar -->
@@ -106,7 +112,7 @@
                     <img src="{{ asset('web/img/user-profile.jpg') }}" class="img-circle elevation-2" alt="User Image">
                   </div>
                   <div class="info">
-                    <a href="#" class="d-block">username</a>
+                    <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                   </div>
                 </div>
           
@@ -182,6 +188,15 @@
         <script src="{{ asset('web/js/bootstrap.min.js') }}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('web/js/adminlte.js') }}"></script>
+        <script>
+          var form = document.getElementById('logout-form');
+          var link = document.getElementById('logout');
+  
+          link.addEventListener('click' , function(e){
+              e.preventDefault();
+              form.submit();
+          })
+        </script>
         @yield('js')
     </body>
 </html>

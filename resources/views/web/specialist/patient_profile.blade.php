@@ -1,7 +1,7 @@
 @extends('web.layout')
 
 @section('title')
-    {{ __('web.patients') }}
+    Patient profile - {{ $patient->name }}
 @endsection
 
 @section('main')
@@ -35,7 +35,7 @@
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                                 <div class="text-center">
-                                    <img class="profile-user-img img-fluid img-circle" src="{{ asset('web/img/user-profile.jpg') }}" alt="User profile picture">
+                                    <img class="profile-user-img img-fluid img-circle" src="{{ asset("web/img/{$patient->img}") }}" alt="User profile picture">
                                 </div>
                                 <h3 class="profile-username text-center">{{ $patient->name }}</h3>
                                 <p class="text-muted text-center">ID : {{ $patient->id }}</p>
@@ -147,7 +147,7 @@
                         </div>
                         <div class="card-body">
                             @if ($to_dos->isNotEmpty())
-                            <table class="table table-hover text-nowrap">
+                            <table class="table table-hover text-nowrap table-responsive">
                                 <thead>
                                     <tr>
                                         <th>{{ __('web.id') }}</th>
@@ -199,14 +199,7 @@
                             </div>
                             <div class="clearfix"></div>
                             @else
-                                <div class="row justify-content-center">
-                                    <div class="col-md-12 text-center">
-                                        <span class="display-1 d-block">OOps!!</span>
-                                        <div class="mb-4 lead">No Data Found</div>
-                                        {{-- <a href="{{ url('specialist_home') }}" class="btn btn-link">
-                                            Back to Home</a> The page you are looking for was not found.--}}
-                                    </div>
-                                </div>
+                                @include('inc.no-data')
                             @endif 
                         </div>
                     </div> 
@@ -283,14 +276,7 @@
                                 </tbody>
                             </table>
                             @else
-                                <div class="row justify-content-center">
-                                    <div class="col-md-12 text-center">
-                                        <span class="display-1 d-block">OOps!!</span>
-                                        <div class="mb-4 lead">No Data Found</div>
-                                        {{-- <a href="{{ url('specialist_home') }}" class="btn btn-link">
-                                            Back to Home</a> The page you are looking for was not found.--}}
-                                    </div>
-                                </div>
+                                @include('inc.no-data')
                             @endif
                         </div>
                     </div>         

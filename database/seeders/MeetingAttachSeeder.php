@@ -14,7 +14,7 @@ class MeetingAttachSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             MeetingAttached::create([
                 'attached' => "$i.jpg",
                 'meeting_id' => $i

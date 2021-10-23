@@ -38,7 +38,6 @@
 </head>
 
 <body>
-
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
@@ -58,8 +57,18 @@
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
 
-        <a href="#Login" class="appointment-btn scrollto"><span class="d-none d-md-inline">Login</a>
-        <a href="#Register" class="appointment-btn scrollto"><span class="d-none d-md-inline">Register</a>
+        @guest   
+            <a href="{{ url('/login') }}" class="appointment-btn scrollto"><span class="d-none d-md-inline">Login</a>
+            <a href="{{ url('/register') }}" class="appointment-btn scrollto"><span class="d-none d-md-inline">Register</a>
+        @endguest
+
+        <form action="{{ url('logout') }}" method="post" id="logout-form">
+            @csrf
+        </form>
+
+        @auth
+            <a href="#" id="logout" class="appointment-btn scrollto"><span class="d-none d-md-inline">Logout</a>
+        @endauth
 
         </div>
     </header><!-- End Header -->
@@ -152,6 +161,15 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('home/assets/js/main.js') }}"></script>
+    <script>
+        var form = document.getElementById('logout-form');
+        var link = document.getElementById('logout');
+
+        link.addEventListener('click' , function(e){
+            e.preventDefault();
+            form.submit();
+        })
+	</script>
     
     </body>
     

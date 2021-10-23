@@ -1,7 +1,7 @@
 @extends('auth.layout')
 
 @section('title')
-    Login
+    Confirm password
 @endsection
 
 @section('main')
@@ -14,9 +14,9 @@
             <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
             </div>
             <div class="card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">Confirm your password</p>
 
-            <form method="POST" action="{{ url('/login') }}">
+            <form method="POST" action="{{ url('/forgot-password') }}">
                 @csrf
                 <div class="input-group mb-3">
                     <input type="email" class="form-control" name="email" placeholder="Email">
@@ -26,27 +26,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" name="password" placeholder="Password">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
-                    <div class="col-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="remember" name="remember">
-                            <label for="remember">
-                                Remember Me
-                            </label>
-                        </div>
-                    </div>
                     <!-- /.col -->
                     <div class="col-4">
                         {{-- <input type="submit" value="submit"> --}}
-                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block float-right">Sign In</button>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -61,10 +45,6 @@
                 </a>
             </div>
             <!-- /.social-auth-links --> --}}
-
-            <p class="mb-1">
-                <a href="{{ url('forgot-password') }}">I forgot my password</a>
-            </p>
             <p class="mb-0">
                 <a href="{{ url('/register') }}" class="text-center">Register a new membership</a>
             </p>

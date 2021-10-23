@@ -2,10 +2,11 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 
 class CreateNewUser implements CreatesNewUsers
@@ -30,14 +31,32 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(User::class),
             ],
             'password' => $this->passwordRules(),
-            // 'type' => 'required'
+            'type' => 'required'
         ])->validate();
 
-        return User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
-            'role_id' => 1
-        ]);
+
+        switch ($input['type']) {
+            case '1':
+                $role = Role::where('name', 'specialist')->first();
+                break;
+            case '2':
+                $role = Role::where('name', 'caregiver')->first();
+                break;
+            case '3':
+                $role = Role::where('name', 'guest')->first();
+                break;
+            default:
+                $role = Role::where('name', 'guest')->first();
+                break;
+                return $role;
+        }
+
+        return
+            User::create([
+                'name' => $input['name'],
+                'email' => $input['email'],
+                'password' => Hash::make($input['password']),
+                'role_id' => $role->id
+            ]);
     }
 }

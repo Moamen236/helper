@@ -35,7 +35,5 @@ class UserSeeder extends Seeder
             'password' => Hash::make('user12345'),
             'role_id' => 3
         ]);
-
-        User::factory()->count(5)->create();
     }
 }

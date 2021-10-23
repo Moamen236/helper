@@ -14,7 +14,7 @@ class MeetingSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             Meeting::factory()->count(4)->create([
                 'patient_id' => $i,
                 'specialist_id' => 1

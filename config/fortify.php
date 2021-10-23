@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\web\specialist\HomeController;
 use App\Providers\RouteServiceProvider;
 use Laravel\Fortify\Features;
 
@@ -61,7 +62,7 @@ return [
     |
     */
 
-    'home' => url('/specialist/home'),
+    'home' => RouteServiceProvider::HOME, //RouteServiceProvider::HOME
 
     /*
     |--------------------------------------------------------------------------
@@ -133,8 +134,8 @@ return [
 
     'features' => [
         Features::registration(),
-        // Features::resetPasswords(),
-        // Features::emailVerification(),
+        Features::resetPasswords(),
+        Features::emailVerification(),
         // Features::updateProfileInformation(),
         // Features::updatePasswords(),
         // Features::twoFactorAuthentication([

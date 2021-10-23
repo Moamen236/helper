@@ -16,6 +16,7 @@ class CreatePatientsTable extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('img')->nullable();
             $table->date('dob')->nullable();
             $table->enum('gender', ['male', 'female'])->nullable();
             $table->tinyInteger('no_of_bro')->nullable();
@@ -23,7 +24,7 @@ class CreatePatientsTable extends Migration
             $table->string('cg_name');
             $table->string('cg_relation')->nullable();
             $table->string('cg_phone')->nullable();
-            $table->foreignId('caregiver_id')->constrained();
+            $table->foreignId('caregiver_id')->nullable()->constrained();
             $table->foreignId('specialist_id')->constrained();
             $table->timestamps();
         });

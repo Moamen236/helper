@@ -14,7 +14,7 @@ class ScheduleSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             Schedule::factory()->count(3)->create([
                 'patient_id' => $i,
                 'caregiver_id' => 1,
