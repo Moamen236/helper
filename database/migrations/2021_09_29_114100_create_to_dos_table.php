@@ -19,8 +19,8 @@ class CreateToDosTable extends Migration
             $table->text('details');
             $table->boolean('finish')->default(false);
             $table->foreignId('patient_id')->constrained();
-            $table->foreignId('caregiver_id')->constrained();
-            $table->foreignId('specialist_id')->constrained();
+            // $table->foreignId('caregiver_id')->constrained();
+            // $table->foreignId('specialist_id')->constrained();
             $table->timestamps();
         });
     }

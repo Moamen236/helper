@@ -3,15 +3,13 @@
 namespace App\Http\Controllers\web;
 
 use Exception;
-use App\Models\ToDo;
 use App\Models\Patient;
-use App\Models\Schedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class PatientsContoller extends Controller
+class PatientsController extends Controller
 {
     public function index()
     {
@@ -19,14 +17,6 @@ class PatientsContoller extends Controller
         $data['specialist_id'] = $user->specialists->first()->id;
         $data['patients'] = Patient::where('specialist_id', '=', $user->specialists->first()->id)->paginate(10);
         return view('web.specialist.patients')->with($data);
-    }
-
-    public function patient($id)
-    {
-        $data['patient'] = Patient::findOrFail($id);
-        $data['to_dos'] = ToDo::where('patient_id', $id)->paginate(5);
-        $data['sessions'] = Schedule::where('patient_id', $id)->get();
-        return view('web.specialist.patient_profile')->with($data);
     }
 
     public function store(Request $request)
@@ -62,8 +52,9 @@ class PatientsContoller extends Controller
         return back();
     }
 
-    public function Update(Request $request)
+    public function update(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             "id" => "required|exists:patients,id",
             "name" => "nullable|string|max:255",
@@ -78,7 +69,7 @@ class PatientsContoller extends Controller
             "specilaist_id" => "nullable|exists:specialists,id",
         ]);
 
-        $patient = Patient::where('id', '=', $request->id);
+        $patient = Patient::where('id', '=', $request->id)->first();
         $path = $patient->img;
         if ($request->hasFile('img')) {
             Storage::disk('uploads')->delete($patient->img);
@@ -86,7 +77,7 @@ class PatientsContoller extends Controller
         }
 
 
-        Patient::create([
+        Patient::findOrFail($request->id)->update([
             "name" => $request->name,
             "dob" => $request->dob,
             "gender" => $request->gender,
@@ -98,7 +89,7 @@ class PatientsContoller extends Controller
             "img" => $path,
             "specialist_id" => $request->specilaist_id,
         ]);
-        $request->session()->flash('success', 'Patient Created sucessfully');
+        $request->session()->flash('success', 'Patient Updated sucessfully');
         return back();
     }
 

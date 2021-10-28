@@ -96,22 +96,15 @@
                                                 <th>{{ __('web.patient') }}</th>
                                                 <th>{{ __('web.date') }}</th>
                                                 <th>{{ __('web.time') }}</th>
-                                                <th>{{ __('web.actions') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($all_sessions as $key => $session) 
+                                            @foreach($all_sessions as $session) 
                                                 <tr>
-                                                    <td>{{ $key+1 }}</td>
-                                                    <td>{{ $session->name }}</td>
-                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $session->appointment)->format('d-m-Y') }}</td>
-                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $session->appointment)->format('H:i') }}</td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm">
-                                                            <a href="" class="btn btn-sm btn-success"><i class="fas fa-edit text-white"></i></a>
-                                                            <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></a>
-                                                        </div>
-                                                    </td>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td><a href="{{ url("specialist/patient/{$session->id}") }}" target="_blank">{{ $session->name }}</a></td>
+                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $session->appointment)->format('d/m/Y') }}</td>
+                                                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $session->appointment)->format('g:i a') }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

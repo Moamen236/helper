@@ -11,17 +11,10 @@ class PlanController extends Controller
     public function index($id)
     {
         $data['patient_id'] = $id;
-        $data['plan_types'] = PlanType::select('id', 'name')->get();
-        // dd($data);
+        $plan_types = PlanType::select('id', 'name')->get();
+        $data['current_level'] = [$plan_types[0], $plan_types[1]];
+        $data['objectives'] = [$plan_types[2], $plan_types[3]];
+
         return view('web.specialist.plan')->with($data);
-
-        // $types = ['Strength Points', 'Weakness Points', 'long term goals', 'Short Term goals'];
-        // foreach ($types as $key => $type) {
-        //     $string = strtolower(preg_replace("[\s]", "_", $type));
-        //     $data["$string"] = PlanType::select('id', 'name')
-        //         ->where('id', '=', $key + 1)
-        //         ->get();
-        // }
-
     }
 }

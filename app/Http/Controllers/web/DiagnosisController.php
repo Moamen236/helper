@@ -4,9 +4,11 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Models\QuesCategory;
+use App\Models\QuesResult;
 use App\Models\Question;
 use App\Models\QuesType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DiagnosisController extends Controller
 {
@@ -36,7 +38,38 @@ class DiagnosisController extends Controller
         }
         $data['diagnosis_questions'] = $diagnosis_questions;
 
-        // dd($diagnosis_questions[0]);
         return view('web.specialist.diagnosis')->with($data);
+    }
+
+    public function store_questions(Request $request)
+    {
+        // dd($request->all());
+        foreach ($request->all() as $key => $result) {
+            if (strpos($key, 'answer_') !== false) {
+                $question_id = str_replace('answer_', '', $key);
+                $request->validate([
+                    'answer_' . $question_id => 'nullable|in:0,1',
+                    'attached_' . $question_id => 'nullable|image'
+                ]);
+                $img = 'attached_' . $question_id;
+                if ($request->hasFile("attached_" . $question_id)) {
+                    $path = Storage::disk('uploads')->put('attached', $request->$img);
+                    QuesResult::create([
+                        'result' => $result,
+                        'attached' => $path,
+                        'question_id' => $question_id,
+                        'patient_id' => $request->patient_id
+                    ]);
+                } else {
+                    QuesResult::create([
+                        'result' => $result,
+                        'question_id' => $question_id,
+                        'patient_id' => $request->patient_id
+                    ]);
+                }
+            }
+        }
+        $request->session()->flash('success', 'Questions Answered sucessfully');
+        return back();
     }
 }

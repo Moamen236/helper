@@ -41,30 +41,29 @@
                             <div class="card">
                                 <div class="card-header p-2">
                                   <ul class="nav nav-pills">
-                                      @for($i = 0; $i <= 1; $i++)
-                                        @if($i == 0)
+                                      @foreach($current_level as $type)    
+                                        @if($loop->first)
                                             <li class="nav-item active">
-                                                <a class="nav-link active" href="#{{ strtolower(preg_replace("[\s]", "_", $plan_types[$i]->name()))}}" data-toggle="tab">{{ $plan_types[$i]->name() }}</a>
+                                                <a class="nav-link active" href="#{{ strtolower(preg_replace("[\s]", "_", $type->name()))}}" data-toggle="tab">{{ $type->name() }}</a>
                                             </li>
                                         @else
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#{{ strtolower(preg_replace("[\s]", "_", $plan_types[$i]->name()))}}" data-toggle="tab">{{ $plan_types[$i]->name() }}</a>
+                                                <a class="nav-link" href="#{{ strtolower(preg_replace("[\s]", "_", $type->name()))}}" data-toggle="tab">{{ $type->name() }}</a>
                                             </li>
                                         @endif
-                                      @endfor
+                                      @endforeach
                                   </ul>
                                 </div><!-- /.card-header -->
                                 <div class="card-body">
                                   <div class="tab-content">
-                                    @for($i = 0; $i <= 1; $i++)
+                                    @foreach($current_level as $type)    
                                         <div
-                                            @if($i == 0)
+                                            @if($loop->first)
                                                 class="tab-pane active"
                                             @else
                                                 class="tab-pane"      
                                             @endif
-                                            id="{{ strtolower(preg_replace("[\s]", "_", $plan_types[$i]->name())) }}"
-                                        >
+                                            id="{{ strtolower(preg_replace("[\s]", "_", $type->name())) }}">
                                             <div class="card">
                                                 <div class="card-header">
                                                     <div class="card-tools float-right">
@@ -83,7 +82,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach($plan_types[$i]->plans as $point) 
+                                                        @foreach($type->plans as $point) 
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $point->description }}</td>
@@ -100,7 +99,7 @@
                                                 </div><!-- /.card-body -->
                                             </div>
                                         </div><!-- /.tab-pane -->
-                                    @endfor
+                                    @endforeach
                                   </div><!-- /.tab-content -->
                                 </div><!-- /.card-body -->
                             </div>
@@ -119,30 +118,29 @@
                             <div class="card">
                                 <div class="card-header p-2">
                                   <ul class="nav nav-pills">
-                                      @for($i = 2; $i <= 3; $i++)
-                                        @if($i == 2)
+                                      @foreach($objectives as $type)   
+                                        @if($loop->first)
                                             <li class="nav-item active">
-                                                <a class="nav-link active" href="#{{ strtolower(preg_replace("[\s]", "_", $plan_types[$i]->name()))}}" data-toggle="tab">{{ $plan_types[$i]->name() }}</a>
+                                                <a class="nav-link active" href="#{{ strtolower(preg_replace("[\s]", "_", $type->name()))}}" data-toggle="tab">{{ $type->name() }}</a>
                                             </li>
                                         @else
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#{{ strtolower(preg_replace("[\s]", "_", $plan_types[$i]->name()))}}" data-toggle="tab">{{ $plan_types[$i]->name() }}</a>
+                                                <a class="nav-link" href="#{{ strtolower(preg_replace("[\s]", "_", $type->name()))}}" data-toggle="tab">{{ $type->name() }}</a>
                                             </li>
                                         @endif
-                                      @endfor
+                                      @endforeach
                                   </ul>
                                 </div><!-- /.card-header -->
                                 <div class="card-body">
                                   <div class="tab-content">
-                                    @for($i = 2; $i <= 3; $i++)
+                                    @foreach($objectives as $type)    
                                         <div
-                                            @if($i == 2)
+                                            @if($loop->first)
                                                 class="tab-pane active"
                                             @else
                                                 class="tab-pane"      
                                             @endif
-                                            id="{{ strtolower(preg_replace("[\s]", "_", $plan_types[$i]->name())) }}"
-                                        >
+                                            id="{{ strtolower(preg_replace("[\s]", "_", $type->name())) }}" >
                                             <div class="card">
                                                 <div class="card-header">
                                                     <div class="card-tools float-right">
@@ -161,7 +159,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach($plan_types[$i]->plans as $point) 
+                                                        @foreach($type->plans as $point) 
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td>{{ $point->description }}</td>
@@ -178,7 +176,7 @@
                                                 </div><!-- /.card-body -->
                                             </div>
                                         </div><!-- /.tab-pane -->
-                                    @endfor
+                                    @endforeach
                                   </div><!-- /.tab-content -->
                                 </div><!-- /.card-body -->
                             </div>

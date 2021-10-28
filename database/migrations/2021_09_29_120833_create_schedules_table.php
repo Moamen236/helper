@@ -18,8 +18,8 @@ class CreateSchedulesTable extends Migration
             $table->dateTime('appointment');
             $table->boolean('finish')->default(false);
             $table->foreignId('patient_id')->constrained();
-            $table->foreignId('caregiver_id')->constrained();
-            $table->foreignId('specialist_id')->constrained();
+            // $table->foreignId('caregiver_id')->constrained();
+            // $table->foreignId('specialist_id')->constrained();
             $table->timestamps();
         });
     }

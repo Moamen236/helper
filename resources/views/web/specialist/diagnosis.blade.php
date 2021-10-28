@@ -31,6 +31,7 @@
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
+          @include('inc.messages')
             <div class="row">
               <div class="col-lg-3">
                 <div class="card card-primary card-outline sticky-top">
@@ -48,7 +49,9 @@
                     <div class="tab-pane fade show active" id="v-pills-notic" role="tabpanel" aria-labelledby="v-pills-notic-tab">
                       <div class="card-body">
                         <div id="accordion_notic">
-                          <form action="" method="post">
+                          <form action="{{ url('specialist/patient/diagnosis/questions/store') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="patient_id" value="{{ $patient_id }}">
                             @foreach($notic_cats as $notic_cat)  
                               <div class="card card-light">
                                 <div class="card-header">
@@ -63,7 +66,7 @@
                                     @foreach($notic_cat->questions as $question) 
                                       <div class="form-check">
                                         <label class="form-check-label">
-                                          <input class="form-check-input" type="checkbox">
+                                          <input class="form-check-input" name="answer_{{ $question->id }}" type="checkbox" value="1">
                                           {{ $question->question() }}
                                         </label>
                                       </div>
@@ -83,7 +86,9 @@
                       @foreach($all_questions as $key => $questions)
                         <div class="tab-pane fade" id="v-pills-{{ $key }}" role="tabpanel" aria-labelledby="v-pills-{{ $key }}-tab">
                           <div class="card-body">
-                            <form action="" method="post" id="{{ $key }}_form" @if($key == 'attached_reports') enctype="multipart/form-data" @endif>
+                            <form action="{{ url('specialist/patient/diagnosis/questions/store') }}" method="post" id="{{ $key }}_form" @if($key == 'attached_reports') enctype="multipart/form-data" @endif>
+                              @csrf
+                              <input type="hidden" name="patient_id" value="{{ $patient_id }}">
                               @foreach($questions as $question)
                                 <div class="card">
                                   <div class="row justify-content-between align-items-center card-header">
@@ -91,13 +96,13 @@
                                       <div class="col-12">
                                         <div class="form-check mb-3">
                                           <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox">
+                                            <input class="form-check-input" type="checkbox" name="answer_{{ $question->id }}" value="1">
                                             <h6 class="m-0">{{ $question->question() }}</h6>
                                           </label>
                                         </div>
                                         <div class="input-group">
                                           <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="exampleInputFile">
+                                            <input type="file" name="attached_{{ $question->id }}" class="custom-file-input" id="exampleInputFile">
                                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                           </div>
                                         </div>
@@ -110,13 +115,13 @@
                                         <div class="float-right">
                                           <div class="form-check">
                                             <label class="form-check-label">
-                                              <input class="form-check-input" type="radio" name="radio{{ $question->id }}">
+                                              <input class="form-check-input" type="radio" name="answer_{{ $question->id }}" value="1">
                                               Yes
                                             </label>
                                           </div>
                                           <div class="form-check">
                                             <label class="form-check-label">
-                                              <input class="form-check-input" type="radio" name="radio{{ $question->id }}">
+                                              <input class="form-check-input" type="radio" name="answer_{{ $question->id }}" value="0">
                                               No
                                             </label>
                                           </div>
@@ -127,7 +132,7 @@
                                   </div>
                                 </div>
                                 @endforeach
-                                <button type="submit" name="{{ $key }}" form="{{ $key }}_form" class="btn btn-sm btn-primary float-right">Submit</button>
+                                <button type="submit" form="{{ $key }}_form" class="btn btn-sm btn-primary float-right">Submit</button>
                                 <div class="clearfix"></div>
                             </form>
                           </div>
@@ -139,7 +144,9 @@
                     <div class="tab-pane fade" id="v-pills-dsm5" role="tabpanel" aria-labelledby="v-pills-dsm5-tab">
                       <div class="card-body">
                         <div id="accordion_dsm">
-                          <form action="" method="post">
+                          <form action="{{ url('specialist/patient/diagnosis/questions/store') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="patient_id" value="{{ $patient_id }}">
                             @foreach($dsm_cats as $dsm_cat)
                               <div class="card card-light">
                                 <div class="card-header">
@@ -161,13 +168,13 @@
                                             <div class="float-right">
                                               <div class="form-check">
                                                 <label class="form-check-label">
-                                                  <input class="form-check-input" type="radio" name="radio{{ $question->id }}">
+                                                  <input class="form-check-input" type="radio" name="answer_{{ $question->id }}" value="1">
                                                   Yes
                                                 </label>
                                               </div>
                                               <div class="form-check">
                                                 <label class="form-check-label">
-                                                  <input class="form-check-input" type="radio" name="radio{{ $question->id }}">
+                                                  <input class="form-check-input" type="radio" name="answer_{{ $question->id }}" value="0">
                                                   No
                                                 </label>
                                               </div>
@@ -191,7 +198,9 @@
                     <div class="tab-pane fade" id="v-pills-scale" role="tabpanel" aria-labelledby="v-pills-scale-tab">
                       <div class="card-body">
                         <div id="accordion_scale">
-                          <form action="" method="post">
+                          <form action="{{ url('specialist/patient/diagnosis/questions/store') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="patient_id" value="{{ $patient_id }}">
                             @foreach($scale_cats as $scale_cat)
                               <div class="card card-light">
                                 <div class="card-header">
@@ -213,13 +222,13 @@
                                             <div class="float-right">
                                               <div class="form-check">
                                                 <label class="form-check-label">
-                                                  <input class="form-check-input" type="radio" name="radio{{ $question->id }}">
+                                                  <input class="form-check-input" type="radio" name="answer_{{ $question->id }}" value="1">
                                                   Yes
                                                 </label>
                                               </div>
                                               <div class="form-check">
                                                 <label class="form-check-label">
-                                                  <input class="form-check-input" type="radio" name="radio{{ $question->id }}">
+                                                  <input class="form-check-input" type="radio" name="answer_{{ $question->id }}" value="0">
                                                   No
                                                 </label>
                                               </div>
@@ -243,7 +252,9 @@
                     <div class="tab-pane fade" id="v-pills-lovaas" role="tabpanel" aria-labelledby="v-pills-lovaas-tab">
                       <div class="card-body">
                         <div id="accordion_lovaas">
-                          <form action="" method="post">
+                          <form action="{{ url('specialist/patient/diagnosis/questions/store') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="patient_id" value="{{ $patient_id }}">
                             @foreach($lovaas_cats as $lovaas_cat)
                               <div class="card card-light">
                                 <div class="card-header">
@@ -265,13 +276,13 @@
                                             <div class="float-right">
                                               <div class="form-check">
                                                 <label class="form-check-label">
-                                                  <input class="form-check-input" type="radio" name="radio{{ $question->id }}">
+                                                  <input class="form-check-input" type="radio" name="answer_{{ $question->id }}" value="1">
                                                   Yes
                                                 </label>
                                               </div>
                                               <div class="form-check">
                                                 <label class="form-check-label">
-                                                  <input class="form-check-input" type="radio" name="radio{{ $question->id }}">
+                                                  <input class="form-check-input" type="radio" name="answer_{{ $question->id }}" value="0">
                                                   No
                                                 </label>
                                               </div>

@@ -53,6 +53,12 @@
                 <li><a class="nav-link scrollto" href="#articles">Articles</a></li>
                 <li><a class="nav-link scrollto" href="#organization">Organizations</a></li>
                 <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                @auth
+                    @if (Auth::user()->role->name == 'specialist')   
+                        <li><a class="nav-link scrollto" href="{{ url('specialist/home') }}">Dashbord</a></li>
+                    @endif
+                @endauth
+                
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->

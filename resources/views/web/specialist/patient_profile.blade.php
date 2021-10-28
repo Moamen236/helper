@@ -29,19 +29,20 @@
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
+            @include('inc.messages')
             <div class="row">
                 <div class="col-lg-3">
                     <div class="sticky-top mb-3">
                         <div class="card card-primary card-outline">
                             <div class="card-body box-profile">
                                 <div class="text-center">
-                                    <img class="profile-user-img img-fluid img-circle" src="{{ asset("web/img/{$patient->img}") }}" alt="User profile picture">
+                                    <img class="profile-user-img img-fluid img-circle" src="{{ asset("web/img/{$patient->img}") }}" alt="User profile picture" style="border-radius:0">
                                 </div>
                                 <h3 class="profile-username text-center">{{ $patient->name }}</h3>
                                 <p class="text-muted text-center">ID : {{ $patient->id }}</p>
                                 <div class="btn-group btn-group-sm mx-auto mb-2" style="display: flex; width:fit-content">
-                                    <a href="" class="btn btn-sm btn-success"><i class="fas fa-edit text-white"></i></a>
-                                    <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></a>
+                                    <a href="#" data-toggle="modal" data-target="#edit_{{ $patient->id }}" class="btn btn-sm btn-success"><i class="fas fa-edit text-white"></i></a>
+                                    <a href="{{ url("specialist/patient/delete/{$patient->id}") }}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></a>
                                 </div>
                                 <a href="{{ url("/specialist/patient/$patient->id/diagnosis") }}" class="btn btn-primary btn-block"><b>{{ __('web.diagnosis') }}</b></a>
                                 <a href="#" class="btn btn-primary btn-block"><b>{{ __('web.reports') }}</b></a>
@@ -74,6 +75,10 @@
                                         <tr>
                                             <th>{{ __('web.date_of_birth') }} :</th>
                                             <td>{{ $patient->dob }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ __('web.age') }} :</th>
+                                            <td>{{ \Carbon\Carbon::parse($patient->dob)->diff(\Carbon\Carbon::now())->y }}</td>
                                         </tr>
                                         <tr>
                                             <th>{{ __('web.gender') }} :</th>
@@ -127,10 +132,12 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="" method="post" id="add_mission_form">
+                                            <form action="{{ url('specialist/patient/mission/store_mission') }}" method="post" id="add_mission_form">
+                                                @csrf
+                                                <input type="hidden" name="patient_id" value="{{ $patient->id }}">
                                                 <div class="form-group">
                                                     <label>{{ __('web.title') }}</label>
-                                                    <input type="text" name="title" class="form-control" aria-describedby="emailHelp" placeholder="Enter title here">
+                                                    <input type="text" name="title" class="form-control" placeholder="Enter title here">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>{{ __('web.details') }}</label>
@@ -139,7 +146,7 @@
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" form="add_mission_form" class="btn btn-primary">{{ __('web.submit') }}</button>
+                                            <button type="submit" form="add_mission_form" class="btn btn-primary">{{ __('web.submit') }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -147,7 +154,7 @@
                         </div>
                         <div class="card-body">
                             @if ($to_dos->isNotEmpty())
-                            <table class="table table-hover text-nowrap table-responsive">
+                            <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th>{{ __('web.id') }}</th>
@@ -157,10 +164,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($to_dos as $key => $to_do)     
+                                    @foreach($to_dos as $to_do)     
                                     <tr>
-                                        <td>{{ $key+1 }}</td>
-                                        <td data-toggle="modal" data-target="#view_mission" style="cursor: pointer">{{ $to_do->title }}</td>
+                                        <td>{{ $loop->iteration}}</td>
+                                        <td data-toggle="modal" data-target="#view_mission_{{ $to_do->id }}" style="cursor: pointer">{{ $to_do->title }}</td>
                                         <td>
                                             @if($to_do->finish)
                                                 <span class="badge bg-success">{{ __('web.finished') }}</span>
@@ -170,13 +177,13 @@
                                         </td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
-                                                <a href="" class="btn btn-sm btn-success"><i class="fas fa-edit text-white"></i></a>
-                                                <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></a>
+                                                <a href=""  data-toggle="modal" data-target="#edit_{{ $to_do->id }}" class="btn btn-sm btn-success"><i class="fas fa-edit text-white"></i></a>
+                                                <a href="{{ url("specialist/patient/mission/delete_mission/{$to_do->id}") }}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></a>
                                             </div>
                                         </td>
                                     </tr>
                                     <!-- Modal View To Do missions -->
-                                    <div class="modal fade" id="view_mission" tabindex="-1" role="dialog" aria-labelledby="view_missionLabel" aria-hidden="true">
+                                    <div class="modal fade" id="view_mission_{{ $to_do->id }}" tabindex="-1" role="dialog" aria-labelledby="view_missionLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -190,6 +197,39 @@
                                             </div>
                                         </div>
                                         </div>
+                                    </div>
+                                    {{-- Edit Mission --}}
+                                    <div class="modal fade" id="edit_{{ $to_do->id }}" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h4 class="modal-title">Edit Mission</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ url('specialist/patient/mission/update_mission') }}" method="POST" id="edit_form_{{ $patient->id }}" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <input type="hidden" name="id" value="{{ $to_do->id }}">
+                                                        <div class="form-group">
+                                                            <label>Title</label>
+                                                            <input type="text" class="form-control" name="title" value="{{ $to_do->title }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Details</label>
+                                                            <textarea class="form-control" rows="7" name="details" spellcheck="false">{{ $to_do->details }}</textarea>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer float-right">
+                                                <button type="submit" form="edit_form_{{ $patient->id }}" class="btn btn-primary">Edit</button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
                                     </div>
                                     @endforeach
                                 </tbody>
@@ -215,7 +255,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            <!-- Modal Add To Do sessions -->
+                            <!-- Modal Add new sessions -->
                             <div class="modal fade" id="add_session" tabindex="-1" role="dialog" aria-labelledby="add_sessionLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
@@ -226,15 +266,21 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="" method="post" id="add_session_form">
+                                            <form action="{{ url('specialist/patient/session/store_session') }}" method="post" id="add_session_form">
+                                                @csrf
+                                                <input type="hidden" name="patient_id" value="{{ $patient->id }}">
                                                 <div class="form-group">
-                                                    <label>{{ __('web.appointment') }}</label>
-                                                    <input type="datetime" name="appointment" class="form-control" aria-describedby="emailHelp">
+                                                    <label>{{ __('web.date') }}</label>
+                                                    <input type="date" name="date" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>{{ __('web.time') }}</label>
+                                                    <input type="time" name="time" class="form-control">
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" form="add_session_form" class="btn btn-primary">{{ __('web.submit') }}</button>
+                                            <button type="submit" form="add_session_form" class="btn btn-primary">{{ __('web.submit') }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -253,25 +299,55 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($sessions as $key => $session)
-                                    <tr>
-                                        <td>{{ $key+1 }}</td>
-                                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $session->appointment)->format('d-m-Y') }}</td>
-                                        <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $session->appointment)->format('H:i') }}</td>
-                                        <td>
-                                            @if($session->finish)
-                                                <span class="badge bg-success">{{ __('web.finished') }}</span>
-                                            @else
-                                                <span class="badge bg-danger">{{ __('web.not_finished') }}</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm">
-                                                <a href="" class="btn btn-sm btn-success"><i class="fas fa-edit text-white"></i></a>
-                                                <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></a>
+                                    @foreach($sessions as $session)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $session->appointment)->format('d/m/Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $session->appointment)->format('g:i a') }}</td>
+                                            <td>
+                                                @if($session->finish)
+                                                    <span class="badge bg-success">{{ __('web.finished') }}</span>
+                                                @else
+                                                    <span class="badge bg-danger">{{ __('web.not_finished') }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <a href="" data-toggle="modal" data-target="#edit_session" class="btn btn-sm btn-success"><i class="fas fa-edit text-white"></i></a>
+                                                    <a href="{{ url("specialist/patient/session/delete_session/{$session->id}") }}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>   
+                                        <!-- Modal Edit sessions -->
+                                        <div class="modal fade" id="edit_session" tabindex="-1" role="dialog" aria-labelledby="edit_sessionLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="edit_sessionLabel">Edit Mission</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="{{ url('specialist/patient/session/update_session') }}" method="post" id="edit_session_form">
+                                                            @csrf
+                                                            <input type="hidden" name="session_id" value="{{ $session->id }}">
+                                                            <div class="form-group">
+                                                                <label>{{ __('web.date') }}</label>
+                                                                <input type="date" name="date" class="form-control" value="{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $session->appointment)->format('Y-m-d') }}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>{{ __('web.time') }}</label>
+                                                                <input type="time" name="time" class="form-control" value="{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $session->appointment)->format('H:i') }}">
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" form="edit_session_form" class="btn btn-primary">{{ __('web.submit') }}</button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </td>
-                                    </tr>   
+                                        </div>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -285,6 +361,104 @@
         </div><!-- /.container-fluid -->
     </div><!-- /.content -->
   </div> <!-- /.content-wrapper -->
+
+  {{-- Edit Patient --}}
+  <div class="modal fade" id="edit_{{ $patient->id }}" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add new patient</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{{ url('specialist/patient/update') }}" method="POST" id="edit_form_{{ $patient->id }}" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="id" value="{{ $patient->id }}">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Name</label>
+                  <input type="text" class="form-control" name="name" value="{{ $patient->name }}">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Date of birth</label>
+                  <input type="date" name="dob" class="form-control" value="{{ $patient->dob }}">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Select gender</label>
+                  <select class="form-control" name="gender">
+                    <option selected value="{{ $patient->gender }}">{{ $patient->gender }}</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Number of brothers</label>
+                  <input type="number" name="no_of_bros" class="form-control" value="{{ $patient->no_of_bro }}">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Rank among brothers</label>
+                  <input type="number" name="arr_btw_bros" class="form-control" value="{{ $patient->arr_btw_bro }}">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Caregiver name</label>
+                  <input type="text" name="cg_name" class="form-control" value="{{ $patient->cg_name }}">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Caregiver Relationship with patient</label>
+                  <input type="text" name="cg_relation" class="form-control" value="{{ $patient->cg_relation }}">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Caregiver Phone number</label>
+                  <input type="text" name="cg_phone" class="form-control" value="{{ $patient->cg_phone }}">
+                </div>
+              </div>
+              <div class="col-6">
+                <label>Current image</label>
+                <div class="image">
+                  <img src="{{ asset("web/img/{$patient->img}")}}" class="img-fluid" alt="" width="200">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="exampleInputFile">Change the image</label>
+                  <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" name="img" id="exampleInputFile">
+                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" name="specilaist_id" value="{{ $specialist_id}}">
+          </form>
+        </div>
+        <div class="modal-footer float-right">
+          <button type="submit" form="edit_form_{{ $patient->id }}" class="btn btn-primary">Edit</button>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
 
 @endsection
 
