@@ -115,36 +115,55 @@
                     <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                   </div>
                 </div>
-          
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                      <a href="{{ url('specialist/home') }}" class="nav-link">
+                      <a href="{{ url('/redirects') }}" class="nav-link">
                         <i class="fas fa-home"></i>
                         <p>
                           {{ __('web.home') }}
                         </p>
                       </a>
                     </li>
-                    <li class="nav-item">
-                      <a href="{{ url('specialist/patients') }}" class="nav-link">
-                        <i class="fas fa-users"></i>
-                        <p>
-                          {{ __('web.patients') }}
-                        </p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="{{ url('specialist/schedule') }}" class="nav-link">
-                        <i class="fas fa-calendar-alt"></i>
-                        <p>
-                          {{ __('web.schedule') }}
-                        </p>
-                      </a>
-                    </li>
+                    @if(Auth::user()->role->name == 'specialist') {{-- specialist --}}
+                      <li class="nav-item">
+                        <a href="{{ route('patients.index') }}" class="nav-link">
+                          <i class="fas fa-users"></i>
+                          <p>
+                            {{ __('web.patients') }}
+                          </p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{ url('specialist/schedule') }}" class="nav-link">
+                          <i class="fas fa-calendar-alt"></i>
+                          <p>
+                            {{ __('web.schedule') }}
+                          </p>
+                        </a>
+                      </li>
+                    @elseif(Auth::user()->role->name == 'caregiver') {{-- caregiver --}}
+                      <li class="nav-item">
+                        <a href="{{ url('caregiver/schedule') }}" class="nav-link">
+                          <i class="fas fa-calendar-alt"></i>
+                          <p>
+                            {{ __('web.schedule') }}
+                          </p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{ url('caregiver/missions') }}" class="nav-link">
+                          <i class="fas fa-calendar-alt"></i>
+                          <p>
+                            {{ __('web.to do missions') }}
+                          </p>
+                        </a>
+                      </li>
+                    @endif
+                    
                     <li class="nav-item">
                       <a href="#" class="nav-link">
                         <i class="fas fa-newspaper"></i>

@@ -447,7 +447,7 @@
                 </div>
               </div>
             </div>
-            <input type="hidden" name="specilaist_id" value="{{ $specialist_id}}">
+            <input type="hidden" name="specilaist_id" value="{{ Auth::id(); }}">
           </form>
         </div>
         <div class="modal-footer float-right">

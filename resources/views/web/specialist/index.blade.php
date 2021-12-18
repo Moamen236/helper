@@ -17,7 +17,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active"><a href="{{ url('specialist_home') }}">{{ __('web.home') }}</a></li>
+              <li class="breadcrumb-item active"><a href="{{ url('specialist/home') }}">{{ __('web.home') }}</a></li>
               {{-- <li class="breadcrumb-item active">Starter Page</li> --}}
             </ol>
           </div><!-- /.col -->
@@ -35,7 +35,6 @@
             <div class="small-box bg-info">
               <div class="inner">
                 <h3>150</h3>
-
                 <p>New Orders</p>
               </div>
               <div class="icon">
@@ -50,7 +49,6 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <h3>53<sup style="font-size: 20px">%</sup></h3>
-
                 <p>Bounce Rate</p>
               </div>
               <div class="icon">

@@ -15,6 +15,7 @@ class CreateFinalResultsTable extends Migration
     {
         Schema::create('final_results', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('patient_id')->constrained();
             $table->tinyInteger('RB')->nullable();
             $table->tinyInteger('SI')->nullable();
             $table->tinyInteger('SC')->nullable();
@@ -22,7 +23,6 @@ class CreateFinalResultsTable extends Migration
             $table->tinyInteger('CS')->nullable();
             $table->tinyInteger('MS')->nullable();
             $table->tinyInteger('coefficient');
-            $table->foreignId('patient_id')->constrained();
             $table->timestamps();
         });
     }

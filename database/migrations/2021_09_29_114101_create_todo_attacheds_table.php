@@ -15,8 +15,8 @@ class CreateTodoAttachedsTable extends Migration
     {
         Schema::create('todo_attacheds', function (Blueprint $table) {
             $table->id();
-            $table->string('attached');
             $table->foreignId('to_do_id')->constrained();
+            $table->string('attached');
             $table->timestamps();
         });
     }

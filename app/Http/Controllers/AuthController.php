@@ -11,10 +11,10 @@ class AuthController extends Controller
     {
         switch (Auth::user()->role->name) {
             case 'specialist':
-                return redirect('/specialist/home');
+                return redirect()->route('specialist.home');
                 break;
             case 'caregiver':
-                return redirect('/');;
+                return redirect('/caregiver/home');;
                 break;
             default:
                 return redirect('/');;

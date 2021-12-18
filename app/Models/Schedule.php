@@ -13,7 +13,7 @@ class Schedule extends Model
 
     public function specialist()
     {
-        return $this->belongsTo(Specialist::class);
+        return $this->belongsTo(User::where('id', $this->user_id)->get());
     }
 
     public function patient()

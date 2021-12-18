@@ -15,9 +15,9 @@ class CreatePlansTable extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
             $table->foreignId('plan_type_id')->constrained();
             $table->foreignId('patient_id')->constrained();
+            $table->text('description');
             $table->timestamps();
         });
     }

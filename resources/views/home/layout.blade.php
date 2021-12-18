@@ -55,7 +55,9 @@
                 <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
                 @auth
                     @if (Auth::user()->role->name == 'specialist')   
-                        <li><a class="nav-link scrollto" href="{{ url('specialist/home') }}">Dashbord</a></li>
+                        <li><a class="nav-link scrollto" href="{{ route('specialist.home') }}">Dashbord</a></li>
+                    @elseif (Auth::user()->role->name == 'caregiver')
+                        <li><a class="nav-link scrollto" href="{{ route('caregiver.home') }}">Dashbord</a></li>
                     @endif
                 @endauth
                 

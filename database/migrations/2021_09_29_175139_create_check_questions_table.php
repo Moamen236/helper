@@ -15,7 +15,7 @@ class CreateCheckQuestionsTable extends Migration
     {
         Schema::create('check_questions', function (Blueprint $table) {
             $table->id();
-            $table->text('question');
+            $table->text('questions');
             $table->timestamps();
         });
     }

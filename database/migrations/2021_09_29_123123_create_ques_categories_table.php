@@ -15,8 +15,8 @@ class CreateQuesCategoriesTable extends Migration
     {
         Schema::create('ques_categories', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
             $table->foreignId('ques_type_id')->constrained();
+            $table->text('name');
             $table->timestamps();
         });
     }

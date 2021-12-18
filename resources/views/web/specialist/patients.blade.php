@@ -49,7 +49,7 @@
                                     </button>
                                   </div>
                                   <div class="modal-body">
-                                    <form action="{{ url('specialist/patients/store') }}" method="POST" id="add_new_form" enctype="multipart/form-data">
+                                    <form action="{{ route('patients.store') }}" method="POST" id="add_new_form" enctype="multipart/form-data">
                                       @csrf
                                       <div class="row">
                                         <div class="col-6">
@@ -108,14 +108,14 @@
                                             <label for="exampleInputFile">Image for patoent</label>
                                             <div class="input-group">
                                               <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name="img" id="exampleInputFile">
+                                                <input type="file" class="custom-file-input" name="picture" id="exampleInputFile">
                                                 <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                               </div>
                                             </div>
                                           </div>
                                         </div>
                                       </div>
-                                      <input type="hidden" name="specilaist_id" value="{{ $specialist_id}}">
+                                      <input type="hidden" name="specialist_id" value="{{ Auth::id() }}">
                                     </form>
                                   </div>
                                   <div class="modal-footer float-right">
@@ -147,14 +147,17 @@
                                   @foreach($patients as $patient)    
                                   <tr>
                                       <td>{{ $loop->iteration }}</td>
-                                      <td> <a href="{{ url("specialist/patient/$patient->id") }}" target="_blank"> {{ $patient->name }} </a></td>
+                                      <td> <a href="{{ url("patients/{$patient->id}") }}" target="_blank"> {{ $patient->name }} </a></td>
                                       <td>{{ \Carbon\Carbon::parse($patient->dob)->diff(\Carbon\Carbon::now())->y }}</td>
                                       <td>{{ $patient->gender }}</td>
                                       <td>
                                           <div class="btn-group btn-group-sm">
-                                              <a href="{{ url("specialist/patient/$patient->id") }}" class="btn btn-sm btn-primary"><i class="fas fa-info-circle text-white"></i></a>
+                                              <a href="{{ url("patients/{$patient->id}") }}" class="btn btn-sm btn-primary"><i class="fas fa-info-circle text-white"></i></a>
                                               <a href="" data-toggle="modal" data-target="#edit_{{ $patient->id }}" class="btn btn-sm btn-success"><i class="fas fa-edit text-white"></i></a>
-                                              <a href="{{ url("specialist/patients/delete/{$patient->id}") }}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></a>
+                                              <form action="{{ url("patients/{$patient->id}") }}" method="get">
+                                                @method('delete')
+                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></button>
+                                              </form>
                                           </div>
                                       </td>
                                   </tr>
@@ -243,7 +246,7 @@
                                                 </div>
                                               </div>
                                             </div>
-                                            <input type="hidden" name="specilaist_id" value="{{ $specialist_id}}">
+                                            <input type="hidden" name="specilaist_id" value="{{ Auth::id(); }}">
                                           </form>
                                         </div>
                                         <div class="modal-footer float-right">

@@ -18,7 +18,7 @@ class CreateMeetingsTable extends Migration
             // $table->text('activities');
             $table->text('diagnosis');
             $table->tinyInteger('duration');
-            $table->foreignId('specialist_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->foreignId('patient_id')->constrained();
             $table->timestamps();
         });

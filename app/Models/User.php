@@ -49,14 +49,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Role::class);
     }
 
-    public function specialists()
+    public function specialist()
     {
-        return $this->hasMany(Specialist::class);
+        return $this->belongsTo(User::class, 'parent_id');
     }
 
     public function caregivers()
     {
-        return $this->hasMany(Caregiver::class);
+        return $this->hasMany(User::class, 'parent_id');
+    }
+
+    public function patients()
+    {
+        return $this->hasMany(Patient::class);
     }
 
     public function check_cases()

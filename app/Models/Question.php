@@ -31,6 +31,6 @@ class Question extends Model
     {
         $lang = $lang ?? App::getLocale();
 
-        return json_decode($this->question)->$lang;
+        return json_decode($this->questions)->$lang;
     }
 }

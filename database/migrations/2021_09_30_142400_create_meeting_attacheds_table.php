@@ -15,8 +15,8 @@ class CreateMeetingAttachedsTable extends Migration
     {
         Schema::create('meeting_attacheds', function (Blueprint $table) {
             $table->id();
-            $table->string('attached');
             $table->foreignId('meeting_id')->constrained();
+            $table->string('attached');
             $table->timestamps();
         });
     }

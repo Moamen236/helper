@@ -17,8 +17,6 @@ class ToDoSeeder extends Seeder
         for ($i = 1; $i <= 5; $i++) {
             ToDo::factory()->count(10)->create([
                 'patient_id' => $i,
-                'caregiver_id' => 1,
-                'specialist_id' => 1,
             ]);
         }
     }

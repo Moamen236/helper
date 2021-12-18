@@ -81,6 +81,7 @@
                         </div>{{-- accordion --}}
                       </div>
                     </div>
+                    
                     {{-- Loop for questions => [ 'adir','attached_reports', 'evaluation_history' ]--}}
                     @foreach($diagnosis_questions as $all_questions)
                       @foreach($all_questions as $key => $questions)

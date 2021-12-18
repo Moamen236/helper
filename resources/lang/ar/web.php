@@ -45,5 +45,10 @@ return [
     'description' => 'وصف',
     'current_level' => 'المستوى الحالي',
     'objectives' => 'الاهداف',
+    // Caregiver Schedule page
+    'Your schedule with Dr.' => 'جدول مواعيدك مع الطبيب',
+    // to do missions page
+    'to do missions' => 'المهمات',
+    'missions' => 'المهمات',
 
 ];

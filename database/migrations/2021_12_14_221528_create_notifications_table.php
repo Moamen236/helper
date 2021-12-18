@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCheckResultsTable extends Migration
+class CreateNotificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateCheckResultsTable extends Migration
      */
     public function up()
     {
-        Schema::create('check_results', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('check_case_id')->constrained();
-            $table->foreignId('check_question_id')->constrained();
-            $table->boolean('result');
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('type');
+            $table->morphs('notifiable');
+            $table->text('data');
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateCheckResultsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('check_results');
+        Schema::dropIfExists('notifications');
     }
 }

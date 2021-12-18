@@ -30,6 +30,7 @@
     <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
+            @include('inc.messages')
             <div class="row">
                 <div class="col-lg-12">
                     {{-- Current level --}}
@@ -67,35 +68,35 @@
                                             <div class="card">
                                                 <div class="card-header">
                                                     <div class="card-tools float-right">
-                                                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add_plan">Add new </button>
+                                                        <button class="btn btn-sm btn-primary add_plan_btn" data-toggle="modal" data-target="#add_plan" data-type-id="{{ $type->id }}">Add new </button>
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </div>
                                                 <!-- /.card-header -->
                                                 <div class="card-body table-responsive p-0">
-                                                <table class="table table-hover text-nowrap">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>{{ __('web.id') }}</th>
-                                                        <th>{{ __('web.description') }}</th>
-                                                        <th>{{ __('web.actions') }}</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach($type->plans as $point) 
+                                                    <table class="table table-hover text-nowrap">
+                                                        <thead>
                                                             <tr>
-                                                                <td>{{ $loop->iteration }}</td>
-                                                                <td>{{ $point->description }}</td>
-                                                                <td>
-                                                                    <div class="btn-group btn-group-sm">
-                                                                        <a href="" class="btn btn-sm btn-success"><i class="fas fa-edit text-white"></i></a>
-                                                                        <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></a>
-                                                                    </div>
-                                                                </td>
+                                                                <th>{{ __('web.id') }}</th>
+                                                                <th>{{ __('web.description') }}</th>
+                                                                <th>{{ __('web.actions') }}</th>
                                                             </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach($type->plans as $point) 
+                                                                <tr>
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $point->description }}</td>
+                                                                    <td>
+                                                                        <div class="btn-group btn-group-sm">
+                                                                            <a href="" data-toggle="modal" data-target="#edit_plan" data-point-id="{{ $point->id }}" data-point-desc="{{ $point->description }}" class="btn btn-sm btn-success edit_plan_btn"><i class="fas fa-edit text-white"></i></a>
+                                                                            <a href="{{ url("specialist/patient/plan/points/delete/{$point->id}") }}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></a>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
                                                 </div><!-- /.card-body -->
                                             </div>
                                         </div><!-- /.tab-pane -->
@@ -165,8 +166,8 @@
                                                                 <td>{{ $point->description }}</td>
                                                                 <td>
                                                                     <div class="btn-group btn-group-sm">
-                                                                        <a href="" class="btn btn-sm btn-success"><i class="fas fa-edit text-white"></i></a>
-                                                                        <a href="" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></a>
+                                                                        <a href="" data-toggle="modal" data-target="#edit_plan" data-point-id="{{ $point->id }}" data-point-desc="{{ $point->description }}" class="btn btn-sm btn-success edit_plan_btn"><i class="fas fa-edit text-white"></i></a>
+                                                                        <a href="{{ url("specialist/patient/plan/points/delete/{$point->id}") }}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt text-white"></i></a>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -201,13 +202,12 @@
             </div>
             <div class="modal-body">
                 <form action="" method="post" id="add_plan_form">
+                    @csrf
+                    <input type="hidden" name="type_id">
+                    <input type="hidden" name="patient_id" value="{{ $patient_id }}">
                     <div class="form-group">
-                        <label>Title</label>
-                        <input type="text" name="title" class="form-control" aria-describedby="emailHelp" placeholder="Enter title here">
-                    </div>
-                    <div class="form-group">
-                        <label>Details</label>
-                        <textarea class="form-control" name="details" rows="3"></textarea>
+                        <label>Description</label>
+                        <textarea class="form-control" name="Description" rows="3"></textarea>
                     </div>
                 </form>
             </div>
@@ -229,22 +229,38 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" id="edit_plan_form">
+                <form action="{{ url('specialist/patient/plan/points/edit') }}" method="post" id="edit_plan_form">
+                    @csrf
+                    <input type="hidden" name="point_id">
                     <div class="form-group">
-                        <label>Title</label>
-                        <input type="text" name="title" class="form-control" aria-describedby="emailHelp" placeholder="Enter title here">
-                    </div>
-                    <div class="form-group">
-                        <label>Details</label>
-                        <textarea class="form-control" name="details" rows="3"></textarea>
+                        <label>Description</label>
+                        <textarea class="form-control" name="description" rows="3"> </textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" form="edit_plan_form" class="btn btn-primary">Submit</button>
+                <button type="submit" form="edit_plan_form" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </div>
 </div>
+
+@section('js')
+    <script>
+        $('.add_plan_btn').click(function(){
+            let type_id = $(this).attr('data-type-id')
+            console.log(type_id);
+            $('#add_plan input[name|="type_id"]').val(type_id)
+        })
+
+        $('.edit_plan_btn').click(function(){
+            let point_id = $(this).attr('data-point-id')
+            let point_desc = $(this).attr('data-point-desc')
+
+            $('#edit_plan input[name="point_id"]').val(point_id)
+            $('#edit_plan textarea[name="description"]').val(point_desc)
+        })
+    </script>
+@endsection
 
 @endsection

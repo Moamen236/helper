@@ -11,16 +11,6 @@ class ToDo extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    public function specialist()
-    {
-        return $this->belongsTo(Specialist::class);
-    }
-
-    public function caregiver()
-    {
-        return $this->belongsTo(Caregiver::class);
-    }
-
     public function patient()
     {
         return $this->belongsTo(Patient::class);

@@ -46,4 +46,9 @@ return [
     'current_level' => 'Current level',
     'objectives' => 'Objectives',
     'description' => 'Description',
+    // Caregiver Schedule page
+    'Your schedule with Dr.' => 'Your schedule with Dr.',
+    // to do missions page
+    'to do missions' => 'TO Do Missions',
+    'missions' => 'Missions',
 ];

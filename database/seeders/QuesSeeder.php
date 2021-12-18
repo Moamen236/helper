@@ -40,7 +40,7 @@ class QuesSeeder extends Seeder
 
         foreach ($adirQues as $adirQue) {
             Question::create([
-                'question' => "$adirQue",
+                'questions' => "$adirQue",
                 'ques_type_id' => 2
             ]);
         }
@@ -59,7 +59,7 @@ class QuesSeeder extends Seeder
 
         foreach ($attchedQues as $attchedQue) {
             Question::create([
-                'question' => "$attchedQue",
+                'questions' => "$attchedQue",
                 'ques_type_id' => 3
             ]);
         }
@@ -87,7 +87,7 @@ class QuesSeeder extends Seeder
 
         foreach ($evaluationQues as $evaluationQue) {
             Question::create([
-                'question' => "$evaluationQue",
+                'questions' => "$evaluationQue",
                 'ques_type_id' => 4
             ]);
         }
@@ -127,7 +127,7 @@ class QuesSeeder extends Seeder
         foreach ($noticQues as $key => $noticQue) {
             foreach ($noticQue as $que) {
                 Question::create([
-                    'question' => "$que",
+                    'questions' => "$que",
                     'ques_category_id' => $key,
                     'ques_type_id' => 1
                 ]);
@@ -162,7 +162,7 @@ class QuesSeeder extends Seeder
         foreach ($dsmQues as $key => $dsmQue) {
             foreach ($dsmQue as $que) {
                 Question::create([
-                    'question' => "$que",
+                    'questions' => "$que",
                     'ques_category_id' => $key,
                     'ques_type_id' => 5
                 ]);
@@ -248,7 +248,7 @@ class QuesSeeder extends Seeder
         foreach ($scaleQues as $key => $scaleQue) {
             foreach ($scaleQue as $que) {
                 Question::create([
-                    'question' => "$que",
+                    'questions' => "$que",
                     'ques_category_id' => $key,
                     'ques_type_id' => 6
                 ]);
@@ -352,7 +352,7 @@ class QuesSeeder extends Seeder
         foreach ($lovaasQues as $key => $lovaasQue) {
             foreach ($lovaasQue as $que) {
                 Question::create([
-                    'question' => "$que",
+                    'questions' => "$que",
                     'ques_category_id' => $key,
                     'ques_type_id' => 7
                 ]);

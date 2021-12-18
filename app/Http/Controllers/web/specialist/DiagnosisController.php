@@ -30,13 +30,18 @@ class DiagnosisController extends Controller
         foreach ($all_questions as $key => $questions) {
             $questions =
                 [
-                    "$questions" => Question::select('id', 'question')
+                    "$questions" => Question::select('id', 'questions')
                         ->where('ques_type_id', '=', $key)
                         ->get()
                 ];
             $diagnosis_questions[] = $questions;
         }
         $data['diagnosis_questions'] = $diagnosis_questions;
+
+        // dd($data);
+
+        // Results
+        $data['results'] = QuesResult::where('patient_id', '=', $id)->get();
 
         return view('web.specialist.diagnosis')->with($data);
     }

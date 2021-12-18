@@ -15,10 +15,10 @@ class CreateCheckCasesTable extends Migration
     {
         Schema::create('check_cases', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->string('name');
             $table->tinyInteger('age');
             $table->enum('gender', ['male', 'female'])->nullable();
-            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

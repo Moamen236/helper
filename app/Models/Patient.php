@@ -13,12 +13,12 @@ class Patient extends Model
 
     public function specialist()
     {
-        return $this->belongsTo(Specialist::class);
+        return $this->belongsTo(User::where('id', $this->specialist_id)->first());
     }
 
     public function caregiver()
     {
-        return $this->belongsTo(Caregiver::class);
+        return $this->belongsTo(User::where('id', $this->caregiver_id)->first());
     }
 
     public function toDos() // the Patient has many to do

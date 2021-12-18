@@ -15,10 +15,10 @@ class CreateQuesResultsTable extends Migration
     {
         Schema::create('ques_results', function (Blueprint $table) {
             $table->id();
-            $table->boolean('result');
-            $table->text('attached')->nullable();
             $table->foreignId('question_id')->constrained();
             $table->foreignId('patient_id')->constrained();
+            $table->boolean('result');
+            $table->text('attached')->nullable();
             $table->timestamps();
         });
     }
